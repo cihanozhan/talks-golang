@@ -1,0 +1,779 @@
+Go programlama dili
+26 Temmuz 2017
+
+Cihan Özhan
+Software Researcher
+https://github.com/cihanozhan
+www.cihanozhan.com
+cihan.ozhan@hotmail.com
+
+* Giriş
+
+* Go nedir?
+
+- Açık kaynak kodlu, sade ve güçlü bir programlama dilidir.
+- Ken Thompson, Rob Pike ve Robert Griesiemer tarafından 2007 yılından geliştirilmeye başlandı.
+- 10 Kasım 2009 yılında tanıtıldı, 28 Mart 2012'da Go 1.0 yayınlandı
+
+.image gophers.png
+
+* Go Diline Genel Bakış
+
+- Go dilinin 'official' web sitesi golang.org‘dur.
+- Go’yu bilgisayarıma nasıl indiririm?  https://golang.org/dl/
+- Go dökümantasyonuna erişim; https://golang.org/doc/
+- Go paketlerine online erişim; https://golang.org/pkg/
+- Online Go IDE; https://play.golang.org/
+
+* Neden Go?
+
+- Sade, kolay ve hızlı öğrenilebilir!
+- Sadece 25 anahtar kelimeye sahiptir. (C99’de 37, C++11’de 84 keyword…)
+- Cross-Platform bir dildir. Linux, Windows, MacOSX, Plan9
+- Söz dizimi tartışmalarını sevmez! Kendi kurallarıyla bu sorunu çözer…
+- Static Typed!
+- Geriye dönük uyumluluk
+- Eşzamanlı(Cuncurrency) programlama için dil seviyesinde destek.
+- Go 'Garbage Collector' mimarisine sahiptir. Hafızayı kendisi yönetir.
+- *Sorun :* Derleme işlemlerinin uzun sürmesi!
+- *Sorun :* Dillerde genellikle sadece belirli yeteneklerin kullanılması! Go’da bir işin genellikle tek bir yolu vardır.
+- *Sorun :* Kodu farklı sunuculara dağıtma! Go tek bir dosyaya derlenir. Bu sayede tek bir binary dosyayı dağıtarak kolayca çalıştırılabilir.
+
+* Go Programlama Dili Kullanıcıları
+
+- Google
+- Docker
+- Apple
+- Twitter
+- Amazon
+- Github
+- Dropbox
+- Facebook
+- Kubernetes
+- Tesla & SpaceX
+- Daha geniş bir kullanıcı listesine ulaşmak için; https://github.com/golang/go/wiki/GoUsers
+
+* Geliştirme Editörleri
+
+- Vim : https://github.com/Fatih/vim-go
+- Emacs : https://github.com/dominikh/go-mode.el
+- SublimeText : https://github.com/DisposaBoy/GoSublime
+- IntelliJ : https://github.com/go-lang-plugin-org/go-lang-idea-plugin
+- Eclipse : https://github.com/GoClipse/goclipse
+- LiteIDE : https://github.com/visualfc/liteide
+- Visual Studio Code : https://github.com/Microsoft/vscode-go
+- Atom : https://atom.io/packages/go-plus
+
+* Go araçları
+
+- Go tool : Go dilinin en temel aracıdır. Go uygulamanızın derleme esnasındaki işlemleri konsol üzerinden parametrik olarak yönetmenizi sağlar.
+
+- Godoc : Kod içerisinde, örneğin bir metod üzerinde yazdığınız açıklama satırına göre bir belgelendirme-dökümantasyon üretmeyi sağlar. godoc.org sitesi üzerinden de github ya da dilin gömülü özelliklerinin dökümanlarına online olarak ulaşmak mümkündür. Örn; http://godoc.org/fmt#Println
+
+- Gofmt : Go dili söz dizimi kurallarını(bazıları katıdır) yöneten bir orkestra şefidir. Go kodu söz dizimi standartlarını uygular.
+
+* Kütüphaneler
+
+- Beego (Web)
+- Gin (Web)
+- Gorilla Toolkit (Web)
+- Revel (Web)
+- Martini (Web)
+- GORM (ORM)
+- Gobot (Robotik ve IoT)
+- EMBD http://embd.kidoman.io/
+
+- Makine Öğrenmesi : www.cihanozhan.com/go-library-makine-ogrenmesi-kutuphaneleri
+
+* Anahtar Kelimeler
+
+.image cihanozhancom-golang-keywords-1.png
+
+* Operatörler ve Sınırlayıcılar
+
+.image cihanozhancom-operators-and-delimiters-1.png
+
+* Türler
+
+.image cihanozhancom-golang-types-1.png
+
+* Go'ya giriş
+
+* İlk Go uygulamamız
+
+.play code/main.go
+
+* Paketler
+
+Her Go uygulaması paketlerden oluşur. 
+
+Paketler ne içerir? 
+- Fonksiyon
+- Türler (types)
+- Değişkenler
+- Sabit türler(constants)
+
+Bir paket bir dosya ve 10 satırdan oluşabileceği gibi, onlarca dosya ve
+binlerce satır kod'dan da oluşabilir.
+
+Başka paketleri kullanabilmek icin *import* ile dahil etmek gerekiyor.
+
+* Paketlerin kullanımı
+
+	package main
+
+	import (
+		"fmt"
+
+		"github.com/fatih/color"
+		log "github.com/koding/logging"
+	)
+
+	func main() {
+		fmt.Println("example app")
+
+		color.Red("Error message")
+
+		log.Info("App started")
+	}
+
+
+* İsimlendirme
+
+- Baş harfi *büyük* karakter ile başlayan tanımlamaları kullanabiliyorsunuz (public).  
+- Baş harfi *küçük* karakter ile başlayan tanımlamaları dışarıdan erişemezsiniz (private).
+
+Örnek: 
+
+	var name string = "example"
+	var Version string = "0.0.1"
+
+	func add(x, y int) int { 
+		return x + y 
+	}
+
+	func Multiply(x, y int) int { 
+		return x * y 
+	}
+
+* Değişkenler
+
+- Statically typed:
+	var x int
+	var s, t string
+- Örtülu (implicit) ya da belirgin (explicit) ilklendirme (initialization):
+	var x int
+	var s, t string = "foo", "bar"  // multiple assignment
+
+	var x = 42                      // int
+	var s, b = "foo", true          // string, bool
+- Kısaltılmış değişken bildirimleri (sadece fonksiyonların içinde geçerli):
+	x := 42
+	s, b := "foo", true
+- Adresini almak mümkün (tipki C'deki gibi)
+	return &x
+# compiler will do the right thing
+
+* Değişkenler, çoklu sonuçlar, sıfır değerler, sabitler (örnek)
+
+- Tanımlanmayan değişkenler, öntanımlı olarak o türün sıfır değerini alır.
+- Birden fazla sonuç dönebiliriz 
+
+.play code/vars/vars.go /START OMIT/,/END OMIT/
+
+* Hata yönetimi (errors)
+
+Çoklu sonuç dönmek güzel, neden sonuçlardan biri *hata* türünde olmuyor?
+
+Exception veya assert yok. 
+
+Hataları her zaman yönetmeniz gerekiyor, kaçış yok.
+
+C'de:
+
+	file := os.Open("/path/file.txt")
+	if file == -1 {
+		return -1
+	}
+
+Go'da 
+
+	file, err := os.Open("/path/file.txt")
+	if err != nil {
+		return 0, err
+	}
+
+	// file ile ilgili işlemler ...
+
+* Araçlar
+
+* Go tool
+
+.image gotool.png
+
+* Go tool (paket derleme)
+
+Go kodunu inşa etmek ve kurmak için `go` aracı kullanmak gerekiyor
+
+Bir tane dosya (main paketli) çalıştırmak için. Derleyip calıştırıyor:
+
+	$ go run hello.go
+
+Mevcut dizindeki paketi derlemek icin:
+
+	$ go build
+	$ ./hello
+
+Go aracı diğer tüm Go araçları için aynı zamanda bir proxy görevi yapıyor. Yani
+onun sayesinde diğer gerekli araçları çağırabilirsiniz (örneğin: go tool
+pprof).
+
+
+* Go tool (import path)
+
+Import path'leri URL şeklinde olabilir:
+
+	import "github.com/fatih/structs"
+	import "golang.org/x/net/websocket"
+
+İndirmek için `go` aracını kullanabiliriz:
+
+	$ go get github.com/fatih/structs
+
+"go get" sırayla şunları sizin için yapıyor:
+
+- Git reposunden GOPATH/src/github.com/fatih/structs olarak indiriyor
+- Tüm paketi derliyor ve kuruyor
+- Eger "-u" parametresini verirseniz paketi güncelliyor
+
+* Godoc
+
+`godoc` kodun içinde yer alan belgelendirmeyi çekip çeşitli şekillerde sunuyor.
+
+Yorum (*comment*) olarak ilgili tanımlamanın üst kısmına eklenmesi. 
+
+	// Println formats using the default formats for its operands and
+	// writes to standard output.  Spaces are always added between operands
+	// and a newline is appended.  It returns the number of bytes written
+	// and any write error encountered.
+	func Println(a ...interface{}) (n int, err error) {
+		return Fprintln(os.Stdout, a...)
+	}
+
+.image godoc.png
+
+Kodun içinde yer alan belgelendirme'nin bakımı daha kolaydır.
+
+* Godoc (devam)
+
+godoc.org online olarak bakabilirsiniz
+
+	http://godoc.org/fmt#Println
+	http://godoc.org/github.com/fatih/structs
+
+Çevrimdışı bir sunucu çalıştırabilirsiniz
+
+	$ godoc -http:6060
+
+Doğrudan terminal'den kullanabilirsiniz:
+
+	$ godoc fmt
+	$ godoc github.com/koding/logging
+
+* Gofmt
+
+Go kodunu güzelleştiriyor.
+
+Tüm Go core kodu gofmt'lendirildi. Gofmt'siz kod içeriye girmiyor.
+
+Go kodu nasıl yazılmalı? sorusunu ortadan kaldırıyor.
+
+Okunuşu iyileştiriyor. Yazmayı iyileştiriyor. 
+
+Stil tartışmalara son veriyor
+
+.image gofmt.png _ 900
+
+* Test (yazmak)
+
+`go` aracı ve `testing` paketi hafif bir test framework'u sunuyor
+
+.code code/test/string_test.go /func TestIndex/,/^}/
+
+* Test (çalıştırmak)
+
+Go aracı ile testleri çalıştırıyorsunuz
+
+	$ go test
+	PASS
+
+	$ go test -v
+	=== RUN TestIndex
+	--- PASS: TestIndex (0.00 seconds)
+	PASS
+
+	$ go test -run "AnotherIndex"
+	=== RUN TestAnotherIndex
+	--- PASS: TestAnotherIndex (0.00 seconds)
+	PASS
+
+Mevcut tüm projeler için çalıştırmak için:
+
+	$ go test github.com/koding/...
+
+* Editör desteği ve uyumluluğu
+
+- *Vim:* https://github.com/fatih/vim-go
+- *Emacs:* https://github.com/dominikh/go-mode.el
+- *SublimeText:* https://github.com/DisposaBoy/GoSublime
+- *IntelliJ:* https://github.com/go-lang-plugin-org/go-lang-idea-plugin
+- *Eclipse:* https://github.com/GoClipse/goclipse
+- *LiteIDE:* https://github.com/visualfc/liteide
+
+
+* Go sözdizimi ve temel dil yapısı
+
+* Türler
+
+- Basit türler:
+	uint8 (byte), uint16, uint32, uint32, uint64,
+	int8, int16, int32, int32 (rune), int64,
+	float32, float64,
+	complex64, complex128,
+	uint, int, uintptr,
+	bool, string,
+	error  // not so usual
+
+- Birleşik (composite) türler:
+	array, struct, pointer, function,
+	slice, map, channel
+
+- Soyut tür:
+	interface
+
+* Türler (devamı)
+
+.play code/data/data.go /START OMIT/,/END OMIT/
+
+* Akış kontrolleri
+
+Basit akışlar:
+
+- if, else
+- for, break, continue
+- switch, case, default, fallthrough
+- return
+- goto
+
+Gelişmiş akışlar:
+
+- range
+- select
+- go
+- defer
+
+* Defer
+
+defer deyimi, kendisini çevreleyen fonksiyon dönene kadar fonksiyonun
+çalışmasını erteler.
+
+.play code/defer/defer.go
+
+* Range
+
+- String (index, rune)
+
+	for rune := range "Cihan" { 
+		fmt.Println(rune)
+	}
+
+- Slice (index, value)
+	for i, item := range items { }
+	for item := range items { }
+
+- Map (key, value)
+
+	for k, v := range map { }
+
+- Channel (element)
+
+	for e := range ch { }
+
+* Fonksiyonlar
+
+Birinci sınıf fonksiyonlar
+
+Fonksiyonlar da bir türdür
+
+Anonim fonksiyonlar
+
+* Fonksiyonlar (devam)
+
+- Düz fonksiyonlar
+	func Sin(x float64) float64
+	func AddScale(x, y int, f float64) int
+
+- Coklu sonuçlar 
+	func Write(data []byte) (int, error)
+
+- Belirsiz sayıda parametre (variadic arguments)
+	func Printf(format string, args ...interface{})
+	
+	// örnek kullanım
+	fmt.Printf("Hello %s: %d", "Cihan", 2015)
+
+- Birinci sınıf fonksiyonlar
+	var delta int
+	return func(x int) int { return x + delta }
+
+* Fonksiyonlar (devam)
+
+.play code/funcs/funcs.go /START OMIT/,/END OMIT/
+
+
+* Structs
+
+Birden fazla veri ve türü organize etmeye yarar. 
+
+	type Vertex struct {
+		X int
+		Y string
+		Z bool
+	}
+
+Veri'ye erişmek için `.` operatörünü kullanıyoruz:
+
+	v := Vertex{
+		X: 5,
+		Y: "Zeynep",
+		Z: true,
+	}
+
+	fmt.Println(v.X)
+
+* Methods
+
+Metodlar da birer fonksiyondur. Sadece fonksiyonlardan farklı olarak _alıcıları_ vardır
+
+Go'da Class yapısı bulunmaz. Ama metodlar ile bir ana türü fonksiyonlar
+tanımlayabilirsiniz. Örnek bir *struct* türüne tanımlanmış metod:
+
+.play code/methods/methods.go /START OMIT/,/END OMIT/
+
+Metodlar Go'da çok önemli bir yere sahip.
+
+* Methods (devam)
+
+Metodları tanımladığınız her türe tanımlayabilirsiniz.
+
+	package main
+
+	import "fmt"
+
+	type MyInt int
+
+	func (m MyInt) Add(a int) int {
+		return int(m) + a
+	}
+
+	func main() {
+		var y MyInt = 4
+		res := y.Add(5)
+
+		fmt.Println(res) // res: 9
+	}
+
+* Interfaces (Arayüz)
+
+Arayüzler bir türün davranışını belirlememizi sağlar.
+
+Interface tanımlaması sıfır, bir veya birden fazla *metod* ile tanımlanır:
+
+	interface{}  // boş interface
+
+	interface {
+		Add(num int) int
+	}
+
+	interface {
+		Len() int
+		Swap(i, j int)
+		Less(i, j int) bool
+	}
+
+
+Bir tür, interface ile tanımlanan metodları tanımlıyorsa (implement) o
+interface'i örtülü (implicit) gerçekleştirir
+
+
+* Interfaces (Örnek)
+
+Point ve MyInt türleri *Add* metodunu tanımlıyor
+
+	func (p Point) Add(a int) int { return p.X + p.Y + a }
+
+	func (m MyInt) Add(a int) int { return int(m) + a }
+
+Interface de bir tür olduğundan bir fonksiyona paslayabiliriz:
+
+.play code/interfaces/interfaces.go /START OMIT/,/END OMIT/
+
+* Interfaces (Standart kitaplıktan örnekler)
+
+Bir türü siralayabilmek için:
+
+	type Sorter interface {
+		Len() int
+		Less(i, j int) bool
+		Swap(i, j int)
+	}
+
+fmt.Printf() cıktısını değiştirmek için (Python'daki _str_, _repr_ gibi) 
+
+	type Stringer interface {
+		String() string
+	}
+
+Herhangi bir türe HTTP serve desteği vermek
+
+	type Handler interface {
+		ServeHTTP(ResponseWriter, *Request)
+	}
+
+* Interfaces (Stringer örneği)
+
+.play code/interfaces3/interfaces3.go /START OMIT/,/END OMIT/
+
+Point ve MyInt türlerine *Stringer* desteği verelim
+
+	func (p Point) String() string {
+		return fmt.Sprintf("X: %d Y: %d Sum: %d", p.X, p.Y, p.Add(0))
+	}
+
+	func (m MyInt) String() string {
+		return "*** " + strconv.Itoa(int(m)) + " ***"
+	}
+
+
+.play code/interfaces2/interfaces2.go /START OMIT/,/END OMIT/
+
+* Interfaces (Çevreleme örnek)
+
+Standart cıktıya bir sey yazdırmak.
+
+	fmt.Println(a ...interface{})
+
+	// kullanım
+	fmt.Println("Gopher", "Cihan")
+
+Belirgin (explicit) olarak da ifade edebiliriz
+
+	fmt.Fprintln(w io.Writer, a ...interface{})
+
+Örnek kullanımlar:
+
+	file, _ := os.Create("tempfile.txt") // *os.File
+	fmt.Fprintln(file, "Gopher")
+
+	connection, _ := net.Dial("tcp", "127.0.0.1:3000") // net.Conn
+	fmt.Fprintln(connection, "Gopher", "Cihan")
+
+	var output string
+	buffer := buffer.NewBufferString(output) // *buffer.Buffer
+	fmt.Fprintln(buffer, "Gopher")
+
+* Interfaces (Çevreleme örnek)
+
+Color paketi (https://github.com/fatih/color) sadece Linux/Mac OS X benzeri
+işletim sistemlerinde çalışıyordu (ANSI desteği olanlarda)
+
+Renk çıktısını kontrol eden değişken (*Output* adında) bir Interface türü
+(io.Writer). Mevcut standard çıktısı kullanıyor.
+
+Windows ANSI desteklemiyor. Çözüm:
+
+.image color.png
+
+* Concurrency (Eşzamanlılık)
+
+* Eşzamanlılık nedir?
+
+Birbirinden bağımsız çalışmaların bir araya gelmesi, birleşmesi.
+
+Parallelik *değildir*
+
+Sadece bir işlemciniz varsa uygulamanız hala eşzamanlı çalışabilir, ama parallel çalışamaz.
+
+Daha fazla bilgi için: http://golang.org/s/concurrency-is-not-parallelism
+
+.image concurrency_vs_parallelism.png
+
+* Sıkıcı bir uygulama
+
+Go'nun eşzamanlı özelliklerini sıkıcı bir uygulama üzerinden anlatalım.
+
+.code code/concurrency/boring.go /START/,/STOP.*/
+
+* Biraz daha az sıkıcı
+
+Zamanlamayı biraz tahmin edilemeyecek şekilde yapalim (hala bir saniyenin altında)
+
+.code code/concurrency/lessboring.go /START/,/STOP/
+
+* Çalıştıralım
+
+Bu sıkıcı uygulama sonsuza kadar çalışıyor.
+
+.play code/concurrency/lessboring.go /^func.main/,$
+
+* Arka plana atalım
+
+go kelimesi normal fonksiyon gibi çalışır, sadece kendisini çağıranı bekletmez.
+
+Bir tane goroutine çalıştırıyor.
+
+Betik komutunun sonuna & konulmuş gibi düşünebilirsiniz.
+
+.play code/concurrency/goboring.go /func.main/,/^}/
+
+* Arka plana atalım (devamı)
+
+Main fonksiyonu bittiğinde uygulama kapanıyor, onunla birlikte sıkıcı uygulamamız da bitiyor.
+
+Biraz daha durabiliriz, böylelikle main fonksiyonu ve çalıştırdığımız goroutine çalıştığını görebiliriz.
+
+.play code/concurrency/waitgoboring.go /func.main/,/^}/
+
+* Goroutine
+
+Goroutine nedir? Goroutine, go kelimesi ile başlatılan ve bağımsız çalışan bir fonksiyondur.
+
+Çok ucuz, binlerce, hatta yüz binlerce çağırabiliriz.
+
+Thread *değildir*. (Işletim sistemi seviyesinde değil)
+
+Bir tane thread altında binlerce goroutine çalışabilir.
+
+Çok ucuz bir thread gibi düşünebilirsiniz.
+
+* İletişim
+
+Önceki sıkıcı uygulamamız sadece çıktı üretmişti.
+
+Halbuki iletişim için girdiye ihtiyac vardır.
+
+Goroutine'ler arasında iletişim nasıl olur?
+
+- Don't communicate by sharing memory; share memory by communicating.
+
+* Channels
+
+Kanallar iki goroutine'nin arasinda bir bağlantı sağlayarak, iletişim
+yapmalarını sağlarlar.
+
+
+Kanal oluşturma:
+
+	ch := make(chan int)
+
+Veri göndermek:
+
+	ch <- 5
+
+Veri almak (ok işareti verinin yönünü gösteriyor):
+
+	v = <-ch
+
+
+* Channels (devam)
+
+.play code/channels/channels.go /START OMIT/,/END OMIT/
+
+Öntanımlı olarak veri gönderirken de alırken de karşı taraf hazır olana kadar
+bloklanır.
+
+* Fibonnaci üreticisi ve alıcısı
+
+.play -edit code/range/range.go /START OMIT/,/END OMIT/
+
+* Tamponlanmış kanallar (Buffered Channels)
+
+- Tamponlanmış bir kanal aradaki senkronizasyon'u kaldırır.
+- Posta kutusu gibi, belirli bir hacmi var. Dolduğunda boşalmasını beklemeniz gerekiyor.
+
+
+Kapasitesi 10 olan bir kanal:
+
+	ch := make(chan int, 10)
+
+* Fibonnaci (buffered)
+
+.play -edit code/bufferedchannels/bufferedchannels.go /START OMIT/,/END OMIT/
+
+* Select
+
+*select* deyimi bir "goroutine"nin birden fazla iletişim işleminde beklemesine
+izin verir.
+
+Veri alana veya gönderiline kadar bloklar.
+
+Default case eklendiyse doğrudan oraya düşer (advanced pattern)
+
+	select {
+	case v1 := <-chan1:
+	case chan3 <- v3:
+	default:
+	}
+
+* Select (devam)
+
+.play -edit code/select/select.go /START OMIT/,/END OMIT/
+
+* Nasıl Go öğrenmeye başlayabilirim?
+
+Türkçe turumuz (Ondokuz Mayıs Üniversitesi'nin katkılarıyla)
+
+- http://tur.golang.org.tr/
+
+Go dilinin tüm özellikleri güzel bir şekilde örneklerle anlatan bir site:
+
+- https://gobyexample.com/
+
+Orta ve ileri seviye örnekler, ipucuları
+
+- https://golang.org/doc/effective_go.html
+
+Cihan Özhan, Go programlama dili eğitimleri(video, makale vb.)
+
+- http://www.cihanozhan.com/category/golang
+
+* Go camiası (go-nuts, irc, go-türkiye ...)
+
+- Türkçe mail listesi: https://groups.google.com/forum/#!forum/golang-tr
+- Ingilizce mail listesi: https://groups.google.com/forum/#!forum/golang-nuts
+- Freenode'de *#go-nuts*
+- Twitter'de *#golang* hash tagi kullanılıyor (#go değil!)
+
+
+* Go nasıl kurulur?
+
+- *Windows:* MSI kurulum dosyasini (mimariye dikkat edin) https://golang.org/dl/ adresinden indirin. Kurduktan sonra ilgili dosyalari `C:\Go` altina koyacakti. `C:\Go\bin` dizini PATH environment değişkenine ekleyin.
+- *OSX:* DMG paketini https://golang.org/dl/ adresinden indirin. Go dağıtımını `/usr/local/go` adresine ekleyecekti. `/usr/local/go/bin` dizinini PATH environment değişkenine ekleyin.
+- *Linux:*  Ilgili paket yöneticisi vasıtasıyla kurun
+- *Linux*(elle):* Ilgili mimari icin arşivi https://golang.org/dl/ adresinden indirin. `/usr/local/go` altına açın. `/usr/local/go/bin`  dizinini PATH environment değişkenini ekleyin: `echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile`.
+
+* Kaynaklar
+
+Slaytı hazırlarken aşağıdaki kaynaklardan faydalandım:
+
+- http://tur.golang.org.tr/
+- https://gobyexample.com/
+- http://talks.golang.org/2012/splash.article
+- http://go-talks.appspot.com/github.com/golang/talks/2012/simple.slide
+- https://github.com/golangmedellin/gotalks
+- https://talks.golang.org/2012/concurrency.slide
+- https://talks.golang.org/2014/taste.slide
+- http://www.cihanozhan.com
+
+* Soru/Cevap
+
